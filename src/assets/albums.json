@@ -1,4 +1,5 @@
-[
+{
+  "albums": [
   {
     "id": 1,
     "images": "https://i.scdn.co/image/ab67616d00001e023e59f3e73b99ed248ab7bae2",
@@ -155,4 +156,5 @@
     "name": "bandaids",
     "artists": "keshi"
   }
-]
+  ]
+}

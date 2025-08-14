@@ -1,21 +1,30 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 // 如果使用pinia
 // import { useFavoriteStore } from '@/stores/favorites'
+const STORAGE_KEY = 'my-favorite-list'
+const favList = ref([])
 // const favoriteStore = useFavoriteStore()
 
 // 任務6. 移除收藏列表，不限定方式
-const favList = ref([])
-const removeFav = (target) => {}
-
+const removeFav = (target) => {
+  favList.value = favList.value.filter(item => item.id !== target.id)
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(favList.value))
+}
+onMounted(() => {
+  const storedData = localStorage.getItem(STORAGE_KEY)
+  if (storedData) {
+    favList.value = JSON.parse(storedData)
+  }
+})
 </script>
 
 <template>
   <div class="favList">
-    <div class="nodata">還沒有加入收藏喔</div>
-
+    <div class="nodata" v-if="!favList.length">還沒有加入收藏喔</div>
     <!-- 任務7-1. 沒有收藏列表顯示⬆️有收藏列表顯示⬇️-->
 
-    <div class="container">
+    <div class="container" v-else>
       <!-- 任務7-2. 顯示收藏列表-->
       <div class="list" v-for="item in favList" :key="item.id">
         <img :src="item.images" />
